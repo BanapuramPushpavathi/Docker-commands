@@ -1,0 +1,147 @@
+Task : 1 ---->pull one httpd image & run a container
+
+    sudo su -
+    yum update -y
+    vim docker.sh
+             sudo yum update -y
+             sudo yum search docker
+             sudo yum info docker
+             sudo yum install -y docker
+             sudo systemctl enable docker.service
+             sudo systemctl start docker.service
+             sudo systemctl status docker.service
+             docker --version
+             sudo yum install git -y
+             sudo curl -L https://github.com/docker/compose/releases/download/1.22.0/docker-compose-$(uname -s)-$(uname -m) -o /usr/local/bin/docker-compose
+             sudo chmod +x /usr/local/bin/docker-compose
+             docker-compose --version
+    sh docker.sh
+    docker --version
+    docker images
+    docker pull httpd
+    docker run -it -d httpd
+    docker ps
+    docker ps -a
+    docker stop d5e313efef57
+    docker rm d5e313efef57
+    docker rmi httpd
+    docker start d5e313efef57
+
+ Task : 2 ------->pull one  nginx image & run a container by assigning port number of 8000:80
+
+       docker images
+       docker ps -a
+       docker pull nginx
+       docker images
+       docker run -it -d -p 8000:80 nginx
+       docker ps
+       docker container status
+       docker ps
+       docker rm -f 238ea900af75
+       docker ps
+       docker ps -a
+
+
+  Task : 3 ------>pull one httpd image and run a container with name of webapp and take a snapshot of running container and push that docker image into dockerhub
+
+    docker pull httpd
+    docker images
+    docker run -it -d --name webapp httpd
+    docker ps
+    docker commit 4bb87c40d8ca bpushpavathi1105/demo
+    docker images
+    docker login
+    docker push bpushpavathi1105/sample
+    docker ps
+    docker -f 4bb87c40d8ca
+    docker ps -a
+    docker rmi bpushpavathi1105/sample
+    docker images
+    docker pull bpushpavathi1105/sample
+    docker rmi bpushpavathi1105/sample
+
+
+Task : 4  pull one amzon linux image  and run a container and to start tom-cat server in the container
+
+    docker pull amazonlinux
+    docker images
+    docker run -it -d amazonlinux
+    docker ps
+    docker exec -it container/bin/bash
+    yum update -y
+    yum install wget -y
+    wget URL(tom-cat)
+    yum install tar -y
+    yum install gzip -y
+    tar -zxvf apache-tomcat-9.085.tar.gz
+    cd apache-tomcat-9.0.85
+    cd bin/
+    yum install java-11* -y
+    java --version
+    sh startup.sh
+
+
+Dockerfile : Dockerfile is a special text file which contains system configuration that can be used to build a docker images
+
+       yum update -y
+       vim docker.sh
+       sh docker.sh
+       docker --version
+       Dockerfile
+       pwd
+       mkdir Dockerfile
+       ls
+       vi dockerfile
+                FROM amazonlinux
+                MAINTAINER "pushpavathi1105@gmail.com"
+                RUN yum update -y
+                RUN yum install wget -y
+                RUN wget https://dlcdn.apache.org/tomcat/tomcat-9/v9.0.85/bin/apache-tomcat-9.0.85.tar.gz
+                RUN yum install tar -y
+                RUN yum install gzip -y
+                RUN tar -zxvf apache-tomcat-9.0.85.tar.gz
+                RUN yum install java-11* -y
+                RUN sh bin/apache-tomcat-9.0.85/bin/startup.sh
+       ls
+       pwd
+       ls
+       docker build -t bpushpavathi1105/bp Dockerfile/
+       docker images
+       docker run -it -d bpushpavathi1105/bp
+       docker ps
+       docker exec -it 2a0ed9d23f8f/bin/bash
+       sh startup.sh
+       docker images
+       docker exec -it 2a0ed9d23f8f /bin/bash
+       cd apache
+
+
+Docker compose : when we want to run multiple container as a single service then we will go for docker compose.
+                 Docker compose will be returned on yaml/yaml language (it is a marqup language)
+
+        vi docker-compose.yml
+       
+                version : '3'
+                    web : 
+                            image : nginx
+                            ports:-4000:80
+                    db : redis
+        
+        cat docker-compose.yml
+        docker-compose --version
+        docker-compose up -d
+        docker-compose down
+        docker ps -a
+        docker rmi
+
+Docker Volume : 
+
+        docker pull httpd
+        docker run -it -d httpd
+        docker exec -it container-id /bin/bash
+        cd htdocs/
+
+Note : while developing any webpages always first page should be with the name of index.html/index.js
+
+        cat index.html
+        docker rm -f 
